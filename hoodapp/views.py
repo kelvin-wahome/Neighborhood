@@ -100,3 +100,20 @@ def home(request):
   '''
   neighbourhoods = Neighbourhood.objects.filter(user=request.user)
   return render(request,'home.html',locals())
+
+@login_required(login_url='/accounts/login/')
+def edit_hood(request,hood_id):
+	'''
+	View function that enables a user to edit his/her neighbourhood details
+	'''
+	neighbourhood = Neighbourhood.objects.get(pk = hood_id)
+	if request.method == 'POST':
+		form = AddHoodForm(request.POST,instance = neighbourhood)
+		if form.is_valid():
+			form.save()
+			messages.success(request, 'Neighbourhood edited successfully')
+
+			return redirect('index')
+	else:
+		form = AddHoodForm(instance = neighbourhood)
+		return render(request,'edit_hood.html',locals())
