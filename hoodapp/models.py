@@ -120,3 +120,8 @@ class Business(models.Model):
 
     def update_business(self):
         self.update
+
+    @classmethod
+    def find_business(cls, id):
+        business = Business.object.get(id=id)
+        return business
