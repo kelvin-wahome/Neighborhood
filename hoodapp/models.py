@@ -1,6 +1,8 @@
 from django.db import models
 import datetime as dt
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 class Neighbourhood(models.Model):
@@ -138,3 +140,14 @@ class Business(models.Model):
 
     def __str__(self):
         self.name
+
+class Join(models.Model):
+    '''
+    class that enables one join neighbourhoods
+    '''
+    user_id = models.OneToOneField(User)
+    hood_id = models.ForeignKey(Neighbourhood)
+
+
+    def __str__(self):
+            return self.user_id
