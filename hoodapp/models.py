@@ -184,3 +184,7 @@ class Comments(models.Model):
     comment = models.TextField()
     user = models.ForeignKey(User)
     post = models.ForeignKey(Posts)
+
+
+    def save_comment(self):
+        self.save()
