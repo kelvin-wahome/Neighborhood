@@ -78,3 +78,18 @@ def add_hood(request):
         else:
             form = AddHoodForm()
             return render(request, 'add_hood.html', locals())
+@login_required(login_url='/accounts/login/')
+def join_hood(request,hood_id):
+	'''
+	View function that enables users join a hood
+	'''
+	neighbourhood = Neighbourhood.objects.get(pk = hood_id)
+	if Join.objects.filter(user_id = request.user).exists():
+
+		Join.objects.filter(user_id = request.user).update(hood_id = neighbourhood)
+	else:
+
+		Join(user_id=request.user,hood_id = neighbourhood).save()
+
+	messages.success(request, 'Success! You have succesfully joined this Neighbourhood ')
+	return redirect('index')
