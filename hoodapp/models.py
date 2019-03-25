@@ -77,3 +77,8 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, primary_key=True)
     hood = models.OneToOneField(
         Neighbourhood, on_delete=models.CASCADE, blank=True, null=True)
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
