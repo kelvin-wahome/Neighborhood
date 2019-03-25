@@ -42,3 +42,6 @@ class Neighbourhood(models.Model):
 
     def update_occupants(self):
         self.update()
+
+    def delete_neighbourhood(self):
+    self.delete()
