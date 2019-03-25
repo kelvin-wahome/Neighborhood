@@ -33,3 +33,6 @@ class Neighbourhood(models.Model):
   police_dept = models.IntegerField(default="0722445233")
   health_dept = models.IntegerField(default="0700505221")
   user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True,null=True)
+
+  def save_neighbourhood(self):
+    self.save()
