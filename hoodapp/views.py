@@ -13,7 +13,7 @@ def index(request):
   '''
   neighbourhoods = Neighbourhood.objects.all()
   return render(request,'index.html',locals())
-  
+
 @login_required(login_url='/accounts/login/')
 def search_business(request):
 
@@ -28,3 +28,12 @@ def search_business(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',locals())
+
+@login_required(login_url='/accounts/login/')
+def profile(request):
+	'''
+	View profile that renders a user's profile page
+	'''
+	profile = Profile.objects.get(user = request.user)
+
+	return render(request,'profile/profile.html',locals())
