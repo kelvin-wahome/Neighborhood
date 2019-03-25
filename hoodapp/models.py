@@ -141,6 +141,7 @@ class Business(models.Model):
     def __str__(self):
         self.name
 
+
 class Join(models.Model):
     '''
     class that enables one join neighbourhoods
@@ -148,15 +149,21 @@ class Join(models.Model):
     user_id = models.OneToOneField(User)
     hood_id = models.ForeignKey(Neighbourhood)
 
-
     def __str__(self):
         return self.user_id
-        
+
+
 class Posts(models.Model):
-  '''
-  Class that enables one create a post on a neighbourhood
-  '''
-  topic = models.CharField(max_length=100)
-  post = models.TextField()
-  user = models.ForeignKey(User)
-  hood = models.ForeignKey(Neighbourhood)
+    '''
+    Class that enables one create a post on a neighbourhood
+    '''
+    topic = models.CharField(max_length=100)
+    post = models.TextField()
+    user = models.ForeignKey(User)
+    hood = models.ForeignKey(Neighbourhood)
+
+    def save_posts(self):
+        self.save()
+
+    def delete_posts(self):
+        self.delete()
