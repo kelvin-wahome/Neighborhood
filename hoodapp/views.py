@@ -93,3 +93,10 @@ def join_hood(request,hood_id):
 
 	messages.success(request, 'Success! You have succesfully joined this Neighbourhood ')
 	return redirect('index')
+
+def home(request):
+  '''
+  View function that renders users neighbourhood
+  '''
+  neighbourhoods = Neighbourhood.objects.filter(user=request.user)
+  return render(request,'home.html',locals())
