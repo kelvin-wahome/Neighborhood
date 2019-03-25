@@ -100,3 +100,13 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.bio
+
+class Business(models.Model):
+  '''
+  Business class with Business properties,methods and function
+  '''
+  name = models.CharField(max_length=30)
+  description = models.TextField(default="",blank=True,null=True)
+  email = models.EmailField()
+  user = models.ForeignKey(User,null=True,blank=True)
+  neighbourhood = models.ForeignKey(Neighbourhood,null=True,blank=True)
