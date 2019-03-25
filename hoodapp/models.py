@@ -53,3 +53,8 @@ class Neighbourhood(models.Model):
     def get_neighbourhoods(cls):
         neighbourhoods = Neighbourhood.objects.all()
         return neighbourhoods
+
+    @classmethod
+    def find_neighbourhood_by_id(cls, id):
+        neighbourhood = Neighbourhood.objects.get(id=id)
+        return neighbourhood
