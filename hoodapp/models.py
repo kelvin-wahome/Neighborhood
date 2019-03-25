@@ -58,8 +58,22 @@ class Neighbourhood(models.Model):
     def find_neighbourhood_by_id(cls, id):
         neighbourhood = Neighbourhood.objects.get(id=id)
         return neighbourhood
-        
-     @classmethod
-     def search_by_title(cls,search_term):
+
+    @classmethod
+    def search_by_title(cls, search_term):
         neighbourhood = cls.objects.filter(name__icontains=search_term)
         return neighbourhood
+
+    def __str__(self):
+        return self.name
+
+
+class Profile(models.Model):
+    '''
+    class that contains user Profile properties
+    '''
+    bio = models.TextField()
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+    hood = models.OneToOneField(
+        Neighbourhood, on_delete=models.CASCADE, blank=True, null=True)
