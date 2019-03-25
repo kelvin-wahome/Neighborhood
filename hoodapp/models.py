@@ -58,3 +58,8 @@ class Neighbourhood(models.Model):
     def find_neighbourhood_by_id(cls, id):
         neighbourhood = Neighbourhood.objects.get(id=id)
         return neighbourhood
+        
+     @classmethod
+     def search_by_title(cls,search_term):
+        neighbourhood = cls.objects.filter(name__icontains=search_term)
+        return neighbourhood
