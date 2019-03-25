@@ -117,3 +117,10 @@ def edit_hood(request,hood_id):
 	else:
 		form = AddHoodForm(instance = neighbourhood)
 		return render(request,'edit_hood.html',locals())
+@login_required(login_url='/accounts/login/')
+def leave_hood(request,id):
+  '''
+  Views that enables users leave a neighbourhood
+  '''
+  Join.objects.get(id = request.user.id).delete()
+  return redirect('index')
