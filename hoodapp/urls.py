@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^update_profile/$', views.update_profile, name='update_profile'),
     url(r'^home/$', views.home, name='home'),
+    url(r'^edit_hood/(\d+)', views.edit_hood, name="edit_hood"),
 
 ]
 
