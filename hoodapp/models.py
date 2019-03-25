@@ -167,3 +167,8 @@ class Posts(models.Model):
 
     def delete_posts(self):
         self.delete()
+        
+    @classmethod
+    def get_post_by_hood(cls, id):
+        post = Posts.objects.filter(hood_id=id).all()
+        return post
