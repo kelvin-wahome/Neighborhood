@@ -130,3 +130,11 @@ class Business(models.Model):
     def get_hood_businesses(cls, id):
         businesses = Business.objects.filter(hood_id=id).all()
         return businesses
+
+    @classmethod
+    def search_by_title(cls, search_term):
+        business = cls.objects.filter(title__icontains=search_term)
+        return business
+
+    def __str__(self):
+        self.name
