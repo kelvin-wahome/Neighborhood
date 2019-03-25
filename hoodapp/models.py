@@ -44,4 +44,12 @@ class Neighbourhood(models.Model):
         self.update()
 
     def delete_neighbourhood(self):
-    self.delete()
+        self.delete()
+
+    class Meta:
+        ordering = ['posted_on']
+
+    @classmethod
+    def get_neighbourhoods(cls):
+        neighbourhoods = Neighbourhood.objects.all()
+        return neighbourhoods
