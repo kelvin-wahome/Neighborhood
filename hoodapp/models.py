@@ -125,3 +125,8 @@ class Business(models.Model):
     def find_business(cls, id):
         business = Business.object.get(id=id)
         return business
+
+    @classmethod
+    def get_hood_businesses(cls, id):
+        businesses = Business.objects.filter(hood_id=id).all()
+        return businesses
