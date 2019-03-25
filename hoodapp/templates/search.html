@@ -1,0 +1,50 @@
+{%extends 'base.html' %}
+{% load static%}
+
+{% block styles%}
+{{block.super}}
+
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<div class="container">
+
+  <div class="row">
+    {% if neighbourhood %}
+      <h2 style="color:black;">Found {{ neighbourhood|length }} of searched term {{message}}</h2>
+    {% else %}
+      <h2> Found 0 neighbourhoods for the search term {{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row">
+
+  {% if neighbourhood %}
+    {% for neighbourhood in neighbourhood %}
+
+<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+  <div class="card" style="width:100% !important;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding-left: 20px;">
+    <div class="panel-heading" style="font-weight:bolder;text-decoration-line: underline;">{{neighbourhood.name}}</div>
+    <div class="panel-body">
+    <p>{{neighbourhood.description}}</p>
+     <p><b>Location: </b>{{neighbourhood.location}}</p>
+    </div>
+    <div class="card-footer">
+    <a href ="{% url 'join_hood' neighbourhood.id %}" class="btn btn-primary btn-sm">Join Hood</a>
+    {% if neighbourhood.user_id == user.id %}
+                  <a href="{% url 'edit_hood' neighbourhood.id %}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+                  {% endif %}
+    {% if neighbourhood.user_id == user.id %}
+    <a href="{% url 'delete_hood' neighbourhood.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+   {% endif %}
+    </div>
+  </div>
+</div>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+{% endblock%}
