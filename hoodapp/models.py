@@ -150,4 +150,13 @@ class Join(models.Model):
 
 
     def __str__(self):
-            return self.user_id
+        return self.user_id
+        
+class Posts(models.Model):
+  '''
+  Class that enables one create a post on a neighbourhood
+  '''
+  topic = models.CharField(max_length=100)
+  post = models.TextField()
+  user = models.ForeignKey(User)
+  hood = models.ForeignKey(Neighbourhood)
