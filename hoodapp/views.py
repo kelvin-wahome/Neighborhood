@@ -224,3 +224,10 @@ def edit_business(request,business_id):
 	else:
 		form = AddBusinessForm(instance = business)
 	return render(request,'edit_business.html',locals())
+
+def delete_business(request,business_id):
+  '''
+  View function that enables a business to be deleted
+  '''
+  Business.objects.filter(pk=business_id).delete()
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
