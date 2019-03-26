@@ -15,7 +15,9 @@ urlpatterns = [
     url(r'^posts/$', views.posts, name='posts'),
     url(r'^edit_post/(\d+)', views.edit_post, name='edit_post'),
     url(r'^delete_post/(\d+)', views.delete_post, name='delete_post'),
-
+    url(r'^add_business/$', views.add_business, name='add_business'),
+    url(r'^businesses/$', views.added_businesses, name='added_businesses'),
+    url(r'^edit_business/(\d+)', views.edit_business, name='edit_business'),
 ]
 
 if settings.DEBUG:
