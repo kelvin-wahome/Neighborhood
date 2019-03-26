@@ -146,10 +146,33 @@ def add_post(request):
   else:
     messages.error(request,'Error!!Post can only be added after joining a neighbourhood!')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
+
 def posts(request):
   '''
   View function that renders the posts page
   '''
   posts = Posts.objects.filter(user = request.user)
   return render(request,'posts.html',locals())
+
+@login_required(login_url='/accounts/login')
+def edit_post(request,post_id):
+  '''
+  View function that enables users edit their posts
+  '''
+  if Join.objects.filter(user_id=request.user).exists():
+    post = Posts.objects.get(id=post_id)
+    if request.method == 'POST':
+      form = PostForm(request.POST,instance = post)
+      if form.is_valid():
+        post = form.save(commit=False)
+        post.user = request.user
+        post.hood = request.user.join.hood_id
+        post.save()
+        return redirect('posts')
+    else:
+      form = PostForm(instance = post)
+      return render(request,'edit_post.html',locals())
+
+  else:
+    messages.error(request,'You cannot edit this post...Join a neighbourhood first')
+    return HttpResponseRedirect(request.META.get('HTTP REFERER'))
