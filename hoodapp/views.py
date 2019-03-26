@@ -176,3 +176,10 @@ def edit_post(request,post_id):
   else:
     messages.error(request,'You cannot edit this post...Join a neighbourhood first')
     return HttpResponseRedirect(request.META.get('HTTP REFERER'))
+    
+def delete_post(request,post_id):
+  '''
+  View function that enables a post to be deleted
+  '''
+  Posts.objects.filter(pk=post_id).delete()
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
