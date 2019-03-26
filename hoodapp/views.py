@@ -201,3 +201,26 @@ def add_business(request):
 	else:
 		form = AddBusinessForm()
 		return render(request,'add_business.html',locals())
+
+@login_required(login_url='/accounts/login/')
+def added_businesses(request):
+	'''
+	View function that returns all added user businesses
+	'''
+	businesses= Business.objects.filter(user = request.user)
+	return render(request,'businesses.html',locals())
+
+@login_required(login_url='/accounts/login/')
+def edit_business(request,business_id):
+	'''
+	View function that enables a user to edit his/her added businesses
+	'''
+	business = Business.objects.get(pk = business_id)
+	if request.method == 'POST':
+		form = AddBusinessForm(request.POST,instance = business)
+		if form.is_valid():
+			form.save()
+			return redirect('added_businesses')
+	else:
+		form = AddBusinessForm(instance = business)
+	return render(request,'edit_business.html',locals())
