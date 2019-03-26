@@ -176,10 +176,28 @@ def edit_post(request,post_id):
   else:
     messages.error(request,'You cannot edit this post...Join a neighbourhood first')
     return HttpResponseRedirect(request.META.get('HTTP REFERER'))
-    
+
 def delete_post(request,post_id):
   '''
   View function that enables a post to be deleted
   '''
   Posts.objects.filter(pk=post_id).delete()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/accounts/login/')
+def add_business(request):
+	'''
+	View function that enables users to add businesses
+	'''
+	if request.method == 'POST':
+		form = AddBusinessForm(request.POST)
+		if form.is_valid():
+			business = form.save(commit = False)
+			business.user = request.user
+			business.save()
+			messages.success(request, 'You Have succesfully created a hood.You may now join your neighbourhood')
+			return redirect('added_businesses')
+
+	else:
+		form = AddBusinessForm()
+		return render(request,'add_business.html',locals())
