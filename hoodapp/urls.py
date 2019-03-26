@@ -11,6 +11,10 @@ urlpatterns = [
     url(r'^update_profile/$', views.update_profile, name='update_profile'),
     url(r'^home/$', views.home, name='home'),
     url(r'^edit_hood/(\d+)', views.edit_hood, name="edit_hood"),
+    url(r'^add_post/$', views.add_post, name='add_post'),
+    url(r'^posts/$', views.posts, name='posts'),
+    url(r'^edit_post/(\d+)', views.edit_post, name='edit_post'),
+    url(r'^delete_post/(\d+)', views.delete_post, name='delete_post'),
 
 ]
 
