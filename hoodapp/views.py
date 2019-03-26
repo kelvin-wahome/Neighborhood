@@ -124,3 +124,25 @@ def leave_hood(request,id):
   '''
   Join.objects.get(id = request.user.id).delete()
   return redirect('index')
+
+@login_required(login_url='/accounts/login/')
+def add_post(request):
+  '''
+  View function that enables a user to create a post in a neighbourhood
+  '''
+  if Join.objects.filter(user_id=request.user).exists():
+    if request.method == 'POST':
+      form = PostForm(request.POST)
+      if form.is_valid():
+        post = form.save(commit=False)
+        post.user = request.user
+        post.hood = request.user.join.hood_id
+        post.save()
+        return redirect('index')
+
+    else:
+      form = PostForm()
+      return render(request,'add_post.html',locals())
+  else:
+    messages.error(request,'Error!!Post can only be added after joining a neighbourhood!')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
