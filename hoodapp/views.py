@@ -146,3 +146,10 @@ def add_post(request):
   else:
     messages.error(request,'Error!!Post can only be added after joining a neighbourhood!')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+def posts(request):
+  '''
+  View function that renders the posts page
+  '''
+  posts = Posts.objects.filter(user = request.user)
+  return render(request,'posts.html',locals())
