@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^update_profile/$', views.update_profile, name='update_profile'),
     url(r'^home/$', views.home, name='home'),
+    url(r'^leave_hood/(\d+)', views.leave_hood, name='leave_hood'),
     url(r'^edit_hood/(\d+)', views.edit_hood, name="edit_hood"),
     url(r'^add_post/$', views.add_post, name='add_post'),
     url(r'^posts/$', views.posts, name='posts'),
@@ -17,7 +18,11 @@ urlpatterns = [
     url(r'^delete_post/(\d+)', views.delete_post, name='delete_post'),
     url(r'^add_business/$', views.add_business, name='add_business'),
     url(r'^businesses/$', views.added_businesses, name='added_businesses'),
+    url(r'^search/', views.search_business, name='search_business'),
     url(r'^edit_business/(\d+)', views.edit_business, name='edit_business'),
+    url(r'^delete_business/(\d+)', views.delete_business, name='delete_business'),
+    url(r'searched/', views.search_results, name='search_results'),
+
 ]
 
 if settings.DEBUG:

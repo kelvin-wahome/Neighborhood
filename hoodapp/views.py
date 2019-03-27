@@ -1,5 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -231,3 +236,17 @@ def delete_business(request,business_id):
   '''
   Business.objects.filter(pk=business_id).delete()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/accounts/login/')
+def search_results(request):
+
+    if 'neighbourhood' in request.GET and request.GET["neighbourhood"]:
+        search_term = request.GET.get("neighbourhood")
+        searched_neighbourhoods = Neighbourhood.search_by_title(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',{"message":message,"neighbourhood": searched_neighbourhoods})
+
+    else:
+        message = "You haven't searched for any neighbourhood"
+        return render(request, 'search.html',{"message":message})
