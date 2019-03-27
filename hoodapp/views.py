@@ -1,16 +1,19 @@
+from django.http import HttpResponse,Http404,HttpResponseRedirect,JsonResponse
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib import messages
-from django.contrib.auth.models import User
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_text
-from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required
-from .models import Neighbourhood, Business, Profile, Join, Posts, Comments
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from .forms import SignupForm,AddHoodForm,AddBusinessForm,UpdateProfileForm,PostForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+from .models import Neighbourhood,Business,Profile,Join,Posts,Comments
 import datetime as dt
-
+from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -129,6 +132,15 @@ def leave_hood(request,id):
   '''
   Join.objects.get(id = request.user.id).delete()
   return redirect('index')
+
+def delete_hood(request,hood_id):
+  '''
+  View function that enables deletion of hoods
+  '''
+  Neighbourhood.objects.filter(pk=hood_id).delete()
+  messages.error(request,'Neighbourhood has been deleted successfully')
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required(login_url='/accounts/login/')
 def add_post(request):
