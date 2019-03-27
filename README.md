@@ -6,7 +6,7 @@
 Kelvin Wahome
 
 ## Link to Deployed Site on Heroku
-
+https://hood96.herokuapp.com/
 
 ## Setup and installation
 
@@ -27,7 +27,7 @@ Kelvin Wahome
 - Create a .env file and add the following:
 
     - SECRET_KEY = `<Secret_key>`
-    - DB_NAME = `awards`
+    - DB_NAME = `hood`
     - DB_USER = `<Username>`
     - DB_PASSWORD = `your db password`
     - DEBUG = `True`
